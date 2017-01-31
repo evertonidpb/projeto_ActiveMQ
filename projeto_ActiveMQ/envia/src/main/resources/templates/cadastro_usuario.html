@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width" />
+<title>Lista de Convidados</title>
+<!-- Última versão CSS compilada e minificada -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Tema opcional -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+<!-- Última versão JavaScript compilada e minificada -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body>
+<script src="http://code.jquery.com/jquery.js"></script>
+    <script src="webjars/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<div class="panel panel-default" style="margin: 10px">
+<div class="panel-heading">
+<h1 class="panel-title">Usuarios Cadastrados</h1>
+</div>
+<div class="panel-body">
+
+<form class="form-inline" method="POST" th:object="${usuario}"
+th:action="@{/envia/usuario/cadastro}" style="margin: 20px 0">
+<div class="form-group">
+<input type="text" class="form-control"
+placeholder="Digite o seu nome" name="nome" required="required"/>
+<input type="text" class="form-control" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}"
+ placeholder="Digite o seu cpf" name="cpf" 
+ title="Digite o CPF no formato nnn.nnn.nnn-nn (somente números)" required="required"/>
+<button type="submit"
+class="btn btn-primary">Adicionar</button>
+</div>
+</form>
+
+
+<table class="table">
+<thead>
+<tr>
+<th>Id</th>
+<th>Nome</th>
+<th>CPF </th>
+<th> Agendar Reserva</th>
+</tr>
+</thead>
+<tbody>
+
+<tr th:each="usuario : ${usuarios}">
+<td th:text="${usuario.id}"></td>
+<td th:text="${usuario.nome}"></td>
+<td th:text="${usuario.cpf}"></td>
+<td> <a th:href="@{/envia/agenda/reserva/__${usuario.id}__}"><span> Fazer reserva para esse usuário</span></a> </td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</body>
+
+
+</body>
+</html>
