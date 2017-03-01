@@ -1,0 +1,27 @@
+Explicações sobre o programa
+
+-> Foi desenvolvido por Everton B. da Silva, Helton Cavalcanti e Júlio Vilar
+
+-> Credenciais para acesso aos e-mails:
+
+                login:    avaliacao1197@gmail.com
+                senha:    unipe@2017
+    
+
+O projeto "envia" está configurado no springboot pra rodar na porta 8081
+O projeto "recebe" está configurado no springboot pra rodar na porta 8082
+
+
+o link do github onde está o projeto é:
+
+              https://github.com/evertonidpb/projeto_ActiveMQ
+
+
+Para acessar a documentação "Envia" copie a pasta dist para dentro do tomcat e  acesse:
+                           http://localhost:8080/dist/envia.html                 
+
+Para acessar a documentação "Recebe" acesse:
+                           http://localhost:8080/dist/recebe.html
+                     
+
+
