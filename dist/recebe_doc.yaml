@@ -1,0 +1,121 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: Recebe (Aplicação B)
+  description: Uma Api que acessa o serviço de mensagens do ActiveMQ e pega os dados referentes a uma reserva efetuada num serviço A e depois envia um email de confirmação.
+  termsOfService: http://helloreverb.com/terms/
+  contact:
+    name: Everton Batista da Silva, Helton Cavalcanti, Julio vilar
+    email: evertonid@ymail.com
+    url: http://everton.com.br
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+host: localhost:8082
+basePath: /recebe
+schemes:
+  - http
+consumes:
+  - application/json
+  - text/html
+produces:
+  - application/json
+  - text/html
+paths:
+  /recebe:
+    get:
+      description: Returns um simples texto de Boas vindas
+      operationId: Boas Vindas
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: resposta de boas vindas
+          schema:
+           type: string
+  /recebe/agenda/confirma:
+    get:
+      description: Acessa o ActiveMQ para obter as mensagens, em seguida envia um email de confirmação para avaliacao1197@gmail.com
+      operationId: obter mensagens
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: Texto de confirmação e indicação do envio de um email para avaliacao1197@gmail.com
+  /recebe/reserva:
+    get:
+      description: Retorna uma lista de mensagens baixadas do ActiveMQ contendo as informações das reservas já confirmadas. 
+      operationId: Listar Reservas
+      produces:
+        - application/json
+      responses:
+        '200':
+         description: Resposta com uma lista de reservas no formato json
+    post:
+      description: Grava uma reserva de forma direta usando um cliente Rest (não precisa de formualario).
+      operationId: Gravar Reserva 
+      produces:
+        - text/html
+      responses:
+        '201':
+          description: Uma confirmação http de gravação realizado com sucesso.
+    
+  /recebe/reserva/{id}:
+    get:
+      description: Método que busca uma reserva específica
+      operationId: Busca Reserva Específica
+      parameters:
+        - name: id
+          in: path
+          description: ID para busca
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Retorna Reserva no formato Json
+        default:
+          description: Retorna Reserva
+          schema:
+            $ref: '#/definitions/Reserva'
+    put:
+      description: deletes a single pet based on the ID supplied
+      operationId: Atualiza Reserva 
+      parameters:
+        - name: id
+          in: path
+          description: ID of pet to delete
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Retorna código de confirmação
+    delete:
+      description: Apaga Reserva
+      operationId: Apagar Reserva
+      parameters:
+        - name: id
+          in: path
+          description: ID da Reserva a ser deletada
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Retorna como resposta apenas o código de confirmação
+      
+            
+definitions:
+  Reserva:
+    type: object
+    required:
+      - id
+    properties:
+      id:
+        type: integer
+        format: int64
+      name:
+        type: string
+      tag:
+        type: string

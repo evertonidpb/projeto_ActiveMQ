@@ -1,0 +1,125 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: Envia (Aplicação A)
+  description: Aplicação que cadastra usuários e faz reserva enviando os dados do usuário específico para o ActiveMQ.
+  termsOfService: http://helloreverb.com/terms/
+  contact:
+    name: Grupo de Desenvolvimento de Aplicações para Web composto por Júlio Vilar, Everton Batista da Silva e Helton Cavalcanti
+    email: evertonid@ymail.com
+    url: http://testes.io
+  license:
+    name: MIT
+    url: http://opensource.org/licenses/MIT
+host: localhost:8081
+basePath: /envia
+schemes:
+  - http
+consumes:
+  - application/json, text/html, text/xml
+produces:
+  - application/json, text/html
+paths:
+  /envia:
+    get:
+      description: Retorna uma mensagem de boas vindas
+      operationId: BoasVindas
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: resposta de boas vindas
+          schema:
+            type: string
+    
+  /envia/usuario/cadastro/:
+    get:
+      description: Invoca formulario de cadastro de usuários e também exibe uma lista de usuários já cadastraos
+      operationId: Cadastrar/Listar Usuários
+      produces:
+        - text/html
+      responses:
+        '200':
+          description: resposta que invoca o formulario de cadastro
+          schema:
+           type: string
+    post:
+      description: Cadastra novos usuários
+      operationId: Efetivar Cadastro de Usuário
+      produces:
+         - text/html
+      parameters:
+        - name: id, nome, cpf
+          in: body
+          description: parametros para gravação do usuário
+          required: true
+          schema:
+            $ref: '#/definitions/Usuario'
+      responses:
+        '201':
+          description: Resposta em texto contendo a confirmação da gravação no banco de dados
+          schema:
+            $ref: '#/definitions/Usuario'
+  
+  /envia/agenda/reserva/{id}:
+    get:
+      description: Busca um usuário específico, pega os seus dados e faz uma reserva enviando os seus dados para o ActiveMQ. 
+      operationId: BuscarUsuario/EnviaMensagem
+      produces:
+        - text/html
+      parameters:
+        - name: id
+          in: path
+          description: ID pra efetivar a busca do usuário e o envio da mensagem para o ActiveMQ
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description:  envia uma mensagem para o ActiveMq com os dados do usuário específico e retorna uma mensagem de ok
+          schema:
+            type: string
+  
+  /envia/usuario/{id}:   
+    delete:
+      description: Apaga um usuário baseado  seu id
+      operationId: Apagar Usuário
+      parameters:
+        - name: id
+          in: path
+          description: ID para deletar usuário
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Responde com o código de confirmação http de sucesso 
+    put:
+      description: Atualiza um usuário baseado  seu id
+      operationId: Atualizar Usuário
+      parameters:
+        - name: id
+          in: path
+          description: ID usado para atualizar usuário
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Atualiza Usuário e retorna o código de confirmação http
+definitions:
+  Usuario:
+    type: object
+    required:
+      - id
+      - nome
+      - cpf
+    properties:
+      id:
+        type: integer
+        format: int32
+      nome:
+        type: string
+      cpf:
+        type: string
+ 
